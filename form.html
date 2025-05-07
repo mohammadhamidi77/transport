@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ps" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>د معلوماتو فورم</title>
+  <style>
+    body { font-family: sans-serif; direction: rtl; text-align: right; padding: 20px; }
+    label { display: block; margin-top: 10px; }
+    input { width: 100%; padding: 5px; margin-top: 5px; }
+    button { margin-top: 15px; padding: 10px 15px; margin-left: 10px; }
+  </style>
+</head>
+<body>
+  <h2>د ټرانسپورټ معلوماتو فورم</h2>
+  <form id="dataForm">
+    <label>نوم:<input type="text" name="name" required></label>
+    <label>نمبر:<input type="text" name="number" required></label>
+    <label>پلیت:<input type="text" name="plate" required></label>
+    <label>نېټه:<input type="date" name="date" required></label>
+    <label>مبدا (From):<input type="text" name="from" required></label>
+    <label>مقصد (To):<input type="text" name="to" required></label>
+    <button type="submit">ثبت</button>
+    <button type="button" onclick="window.print()">چاپ</button>
+    <button type="button" onclick="clearForm()">ډیليټ</button>
+  </form>
+
+  <script>
+    const form = document.getElementById('dataForm');
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbzJn-SrgCAQf6xzoYFo7wGL9SROSjjrxd-pTNxB6H_OlQc-rrHQ3R99_1c3dyebLDl0/exec';
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+        .then(response => alert('معلومات ثبت شول!'))
+        .catch(error => alert('خطا: معلومات ثبت نه شول'));
+      form.reset();
+    });
+
+    function clearForm() {
+      if (confirm('ایا ته غواړې ټول معلومات ړنګ کړې؟')) {
+        form.reset();
+      }
+    }
+  </script>
+</body>
+</html>
